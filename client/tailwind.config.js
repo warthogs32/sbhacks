@@ -1,20 +1,29 @@
-// tailwind.config.js
-const production = !process.env.ROLLUP_WATCH; // or some other env var like NODE_ENV
+const { tailwindExtractor } = require("tailwindcss/lib/lib/purgeUnusedStyles");
+
 module.exports = {
-  future: { // for tailwind 2.0 compat
-    purgeLayersByDefault: true, 
-    removeDeprecatedGapUtilities: true,
-  },
-  plugins: [
-    // for tailwind UI users only
-    require('@tailwindcss/ui'),
-    // other plugins here
-  ],
-  purge: {
-    content: [
-      "./src/**/*.svelte",
-      // may also want to include base index.html
-    ], 
-    enabled: production // disable purge in dev
-  },
+	purge: {
+		content: [
+			"./src/**/*.html",
+			"./src/**/*.svelte",
+		],
+		options: {
+			defaultExtractor: (content) => [
+				// This is an internal Tailwind function that we're not supposed to be allowed to use
+				// So if this stops working, please open an issue at
+				// https://github.com/babichjacob/sapper-postcss-template/issues
+				// rather than bothering Tailwind Labs about it
+				...tailwindExtractor(content),
+				// Match Svelte class: directives (https://github.com/tailwindlabs/tailwindcss/discussions/1731)
+				...[...content.matchAll(/(?:class:)*([\w\d-/:%.]+)/gm)].map(([_match, group, ..._rest]) => group),
+			],
+			keyframes: true,
+		},
+	},
+	theme: {
+		extend: {},
+	},
+	variants: {
+		extend: {},
+	},
+	plugins: [],
 };
