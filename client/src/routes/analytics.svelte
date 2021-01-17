@@ -1,11 +1,15 @@
 <script>
   import { LayerCake, Svg } from "layercake";
   import { scaleLinear } from "d3-scale";
+  import { onMount } from "svelte";
 
   import Radar from "../components/Radar.svelte";
   import AxisRadial from "../components/AxisRadial.svelte";
 
   import data from "../components/radarScores.js";
+
+  let analyticMessage =
+    "This is the type of poop you most enjoy based on your swipes.";
 
   const seriesKey = "name";
   const xKey = [
@@ -20,23 +24,70 @@
     "Embedded Objects",
   ];
 
+  // this needs to be changed to fetch from firebase instead of the test file
   const seriesNames = Object.keys(data[0]).filter((d) => d !== seriesKey);
+  var poops = seriesNames;
+  onMount(() => {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        poops = db
+          .collection("users")
+          .doc(user.uid)
+          .get()
+          .then(function (doc) {
+            console.log(user.uid);
+            if (doc.exists) {
+              console.log("exists");
+              var person = doc.data();
+              console.log(person);
+            } else {
+              console.log("no doc, using default");
+              analyticMessage =
+                "Once you have made swipes, your analytics graph will show up.";
+            }
+          });
+      } else {
+        // User not logged in or has just logged out.
+        console.log("NO USERRRRR");
+      }
+    });
+
+    // poops = db
+    //   .collection("users")
+    //   .get(user.uid)
+    //   .then(function (doc) {
+    //     console.log(user.uid);
+    //     if (doc.exists) {
+    //       console.log("exists");
+    //       console.log(doc);
+    //     } else {
+    //       console.log("no doc, using default");
+    //       analyticMessage =
+    //         "Once you have made swipes, your analytics graph will show up.";
+    //     }
+    //   });
+  });
+
+  console.log(poops);
+
   var total = 0;
   data.forEach((d) => {
-    seriesNames.forEach((name) => {
+    console.log(d);
+    poops.forEach((name) => {
+      console.log(d[name]);
       d[name] = +d[name];
       total += d[name];
     });
   });
   data.forEach((d) => {
-    seriesNames.forEach((name) => {
+    poops.forEach((name) => {
       d[name] = (d[name] / total) * 35; // prevents chart from getting really big or small
       if (d[name] === 0) {
         console.log("zero");
       }
     });
   });
-  console.log(total);
+  console.log(data);
 </script>
 
 <div class="container mx-auto mt-24">
@@ -45,7 +96,7 @@
       <div class="px-4 lg:px-2 sm:px-16">
         <h2 class="text-2xl font-bold leading-6 text-gray-900">Analysis</h2>
         <p class="text-md text-gray-600 mt-5">
-          This is the type of poop you most enjoy based on your swipes.
+          {analyticMessage}
         </p>
       </div>
     </div>
@@ -91,4 +142,18 @@
       </form>
     </div>
   </div>
+  <script
+    src="https://www.gstatic.com/firebasejs/8.2.3/firebase-app.js"></script><script
+    src="https://www.gstatic.com/firebasejs/8.2.3/firebase-auth.js"></script><script
+    src="https://www.gstatic.com/firebasejs/8.2.3/firebase-firestore.js"></script><script>
+    var firebaseConfig = {
+      apiKey: " AIzaSyCPBQOoHU38VXcW7LFSoGT-IrrHwxiil48 ",
+      projectId: "sbhacks2021-301902",
+      authDomain: "sbhacks2021-301902.firebaseapp.com",
+      databaseURL: "https://sbhacks2021-301902.firebaseio.com",
+      storageBucket: "sbhacks2021-301902.appspot.com",
+    };
+    firebase.initializeApp(firebaseConfig);
+    // var db = firebase.firestore();
+  </script>
 </div>

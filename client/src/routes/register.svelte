@@ -5,8 +5,6 @@
     window.location.href = "/";
   }
 
-  
-      
   onMount(() => {
     document.querySelector("#register").addEventListener("click", function (e) {
       e.preventDefault();
@@ -27,6 +25,17 @@
               password: password,
               fname: firstname,
               lname: lastname,
+              swipes: {
+                Yellow: 0,
+                Green: 0,
+                Brown: 0,
+                Black: 0,
+                Smooth: 0,
+                Rough: 0,
+                Bright: 0,
+                Dark: 0,
+                "Embedded Objects": 0,
+              },
             })
             .then(function () {
               window.alert("You are registered! Happy poop matching!");
@@ -38,12 +47,12 @@
           window.alert(error.message);
         });
     });
-    
+
     firebase.auth().onAuthStateChanged(function (user) {
-        window.user = user;
-        console.log(user);
+      window.user = user;
+      console.log(user);
     });
-  });  
+  });
   let src =
     "https://www.emoji.com/wp-content/uploads/filebase/thumbnails/icons/emoji-icon-glossy-00-05-faces-face-fantasy-smiling-poo-with-heart-eyes-72dpi-forPersonalUseOnly.png";
 </script>
@@ -127,5 +136,4 @@
       </div>
     </form>
   </div>
-
 </div>
