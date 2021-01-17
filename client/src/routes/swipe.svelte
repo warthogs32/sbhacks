@@ -1,13 +1,61 @@
 <script>
+  import {goto} from "@sapper/app"
+  import {stats} from "../stores/stats"
+
   let missing_src =
     "https://upload.wikimedia.org/wikipedia/commons/b/bf/Sad_face.gif";
   let images = [];
-  function get_images() {
-    // Fetch images
-    images = []
-}
+  
+  onMount(() =>
+  {
+    function get_images() {
+      const turds = db.collection("images");
+
+      
+
+      // Fetch images
+      
+      images = [...fetched_images,...images];
+      
+    }
+
+  });
 
 
+  function like(){
+    if (images.length > 0){
+      let image = images.pop();
+      stats.like(image);
+    }
+    if (images.length < 5) {
+      get_images();
+    }
+    if (images.length == 0){
+      // Something bad happened
+    }
+  }
+
+
+  function dislike(){
+    if(images.length > 0){
+      let image = images.pop();
+      stats.dislike(image);
+    }
+    if (images.length < 5) {
+      get_images();
+    }
+    if (image.length == 0) {
+      // Something bad happened
+    }
+  }
+
+  function add_pic(){
+    goto("/upload");
+  }
+
+  function goto_analytics(){
+    goto("/analytics");
+  }
 </script>
 
 <div class="h-screen">
@@ -19,6 +67,7 @@
         </div>
         <div>
           <button
+            on:click={goto_analytics}
             type="button"
             class="block text-gray-800 hover:text-gray-700 focus:text-gray-700 focus:outline-none">
             <svg class="h-6 w-6 fill-current" viewBox="0 0 24 24">
@@ -41,7 +90,7 @@
         {#if images.length > 0}
           <img src={images[0].src} alt="Poo" />
         {:else}
-          <img class="object-scaled-down" src={missing_src} alt="Missing" />
+          <img class="object-scaled-down max-w-sm" src={missing_src} alt="Missing" />
         {/if}
       </div>
     </div>
@@ -49,6 +98,7 @@
       class="w-screen px-12 pt-6 flex-none flex flex-row justify-around md:justify-center self-end mb-6"
     >
       <button
+        on:click={dislike}
         class="uppercase p-3 mx-6 flex items-center bg-red-600 text-blue-50 max-w-max shadow-sm hover:shadow-lg rounded-full w-12 h-12 sm:self-start">
         <svg
           width="32"
@@ -63,6 +113,7 @@
       </button>
 
       <button
+        on:click={add_pic}
         class="uppercase p-3 mx-6 flex items-center bg-yellow-600 text-blue-50 max-w-max shadow-sm hover:shadow-lg w-12 h-12 self-center">
         <svg
           width="32"
@@ -78,6 +129,7 @@
       </button>
 
       <button
+        on:click={like}
         class="uppercase p-3 mx-6 flex items-center bg-green-600 text-blue-50 max-w-max shadow-sm hover:shadow-lg rounded-full w-12 h-12 sm:self-end">
         <svg
           width="32"

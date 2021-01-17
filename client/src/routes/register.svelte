@@ -1,6 +1,6 @@
 <script>
   import { onMount } from "svelte";
-
+  import {goto} from "@sapper/app"
   function goLogin() {
     window.location.href = "/";
   }
@@ -39,7 +39,7 @@
             })
             .then(function () {
               window.alert("You are registered! Happy poop matching!");
-              window.location.href = "swipe";
+              goto("swipe");
             });
         })
         .catch((error) => {
