@@ -87,7 +87,8 @@
                     email: currentUser.email,
                     password: password,
                     fname: firstname,
-                    lname: lastname 
+                    lname: lastname,
+                    swipes: 0
                 }
             ).then(function(){
                 window.alert(currentUser.uid);
@@ -106,10 +107,10 @@
       e.stopPropagation();
       firebase.auth().signOut().then(() =>
       {
-        console.log("signed out");
+        window.alert("signed out");
       }).catch((error) =>
       {
-          console.log(error.message);
+          window.alert(error.message);
       });
       
     });
