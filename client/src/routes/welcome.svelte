@@ -31,7 +31,7 @@
             type="email"
             autocomplete="email"
             required
-            class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+            class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-yellow-500 focus:border-yellow-700 focus:z-10 sm:text-sm"
             placeholder="Email address"
           />
         </div>
@@ -43,7 +43,7 @@
             type="password"
             autocomplete="current-password"
             required
-            class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+            class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-yellow-500 focus:border-yellow-700 focus:z-10 sm:text-sm"
             placeholder="Password"
           />
         </div>
@@ -55,7 +55,7 @@
             id="remember_me"
             name="remember_me"
             type="checkbox"
-            class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+            class="h-4 w-4 text-indigo-600 focus:ring-yellow-600 border-gray-300 rounded"
           />
           <label for="remember_me" class="ml-2 block text-sm text-gray-900">
             Remember me
