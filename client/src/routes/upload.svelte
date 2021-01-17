@@ -1,19 +1,7 @@
 
-<script src="https://www.gstatic.com/firebasejs/8.2.3/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.2.3/firebase-auth.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.2.3/firebase-firestore.js"></script>
 
 <script>
-
-var firebaseConfig = {
-      apiKey: " AIzaSyCPBQOoHU38VXcW7LFSoGT-IrrHwxiil48 ",
-      projectId: "sbhacks2021-301902",
-      authDomain: "sbhacks2021-301902.firebaseapp.com",
-      databaseURL: "https://sbhacks2021-301902.firebaseio.com",
-      storageBucket: "sbhacks2021-301902.appspot.com",
-    };
-    firebase.initializeApp(firebaseConfig);
-    var db = firebase.firestore();
+    import {db} from '../firebase';
 
     let image_url = "";
     let color = "yellow";
