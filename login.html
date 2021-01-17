@@ -52,13 +52,13 @@
       var currentUser;
       auth.signInWithEmailAndPassword(email, password)
         .then((user) => {
-            currentUser = user;
+            currentUser = user.user;
             console.log("signed in");
-            console.log(currentUser.uid);
+            window.alert(currentUser.uid);
         })
         .catch((error) => {
             console.log("sign in error");
-            console.log(error.message);
+            window.alert(error.message);
         });
     });
 
@@ -72,7 +72,7 @@
       var currentUser;
       auth.createUserWithEmailAndPassword(email, password)
         .then((user) => {
-            currentUser = user;
+            currentUser = user.user;
             console.log("registered");
             console.log(currentUser.uid);
         })
