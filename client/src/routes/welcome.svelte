@@ -1,13 +1,75 @@
 <script>
+  import { onMount } from "svelte";
+
+  onMount(() => {
+    document.querySelector("#sign-in").addEventListener("click", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      var email = document.querySelector("#email").value;
+      var password = document.querySelector("#password").value;
+      var auth = firebase.auth();
+      var currentUser;
+      auth
+        .signInWithEmailAndPassword(email, password)
+        .then((user) => {
+          currentUser = user.user;
+          console.log("signed in");
+          window.alert(currentUser.uid);
+        })
+        .catch((error) => {
+          console.log("sign in error");
+          window.alert(error.message);
+        });
+    });
+
+    document.querySelector("#register").addEventListener("click", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      var email = document.querySelector("#email").value;
+      var password = document.querySelector("#password").value;
+      var firstname = document.querySelector("#fname").value;
+      var lastname = document.querySelector("#lname").value;
+      var auth = firebase.auth();
+      var currentUser;
+      var db = firebase.firestore();
+      auth
+        .createUserWithEmailAndPassword(email, password)
+        .then((user) => {
+          currentUser = user.user;
+          db.collection("users")
+            .doc(currentUser.uid)
+            .set({
+              email: currentUser.email,
+              password: password,
+              fname: firstname,
+              lname: lastname,
+            })
+            .then(function () {
+              window.alert(currentUser.uid);
+            });
+        })
+        .catch((error) => {
+          console.log("register error");
+          window.alert(error.message);
+        });
+    });
+
+    document.querySelector("#sign-out").addEventListener("click", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+          console.log("signed out");
+        })
+        .catch((error) => {
+          console.log(error.message);
+        });
+    });
+  });
   let src =
     "https://www.emoji.com/wp-content/uploads/filebase/thumbnails/icons/emoji-icon-glossy-00-05-faces-face-fantasy-smiling-poo-with-heart-eyes-72dpi-forPersonalUseOnly.png";
-
-  function handleRegister() {
-    alert("regiter clicked");
-  }
-  function handleLogin() {
-    alert("login");
-  }
 </script>
 
 <div
@@ -26,7 +88,7 @@
         <div>
           <label for="email-address" class="sr-only">Email address</label>
           <input
-            id="email-address"
+            id="email"
             name="email"
             type="email"
             autocomplete="email"
@@ -65,11 +127,13 @@
 
       <div>
         <button
+          id="sign-in"
           type="submit"
           class="my-1 group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-yellow-800 hover:bg-yellow-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-400">
           Sign in
         </button>
         <button
+          id="register"
           type="submit"
           class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-yellow-800 hover:bg-yellow-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-400">
           Register
@@ -77,4 +141,22 @@
       </div>
     </form>
   </div>
+  <script
+    src="https://www.gstatic.com/firebasejs/8.2.3/firebase-app.js"></script><script
+    src="https://www.gstatic.com/firebasejs/8.2.3/firebase-auth.js"></script><script
+    src="https://www.gstatic.com/firebasejs/8.2.3/firebase-firestore.js"></script><script>
+    var firebaseConfig = {
+      apiKey: " AIzaSyCPBQOoHU38VXcW7LFSoGT-IrrHwxiil48 ",
+      projectId: "sbhacks2021-301902",
+      authDomain: "sbhacks2021-301902.firebaseapp.com",
+      databaseURL: "https://sbhacks2021-301902.firebaseio.com",
+      storageBucket: "sbhacks2021-301902.appspot.com",
+    };
+    firebase.initializeApp(firebaseConfig);
+
+    firebase.auth().onAuthStateChanged(function (user) {
+      window.user = user;
+      console.log(user);
+    });
+  </script>
 </div>
