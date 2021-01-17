@@ -5,6 +5,8 @@
     window.location.href = "/";
   }
 
+  
+      
   onMount(() => {
     document.querySelector("#register").addEventListener("click", function (e) {
       e.preventDefault();
@@ -13,9 +15,7 @@
       var password = document.querySelector("#password").value;
       var firstname = document.querySelector("#fname").value;
       var lastname = document.querySelector("#lname").value;
-      var auth = firebase.auth();
       var currentUser;
-      var db = firebase.firestore();
       auth
         .createUserWithEmailAndPassword(email, password)
         .then((user) => {
@@ -38,7 +38,12 @@
           window.alert(error.message);
         });
     });
-  });
+    
+    firebase.auth().onAuthStateChanged(function (user) {
+        window.user = user;
+        console.log(user);
+    });
+  });  
   let src =
     "https://www.emoji.com/wp-content/uploads/filebase/thumbnails/icons/emoji-icon-glossy-00-05-faces-face-fantasy-smiling-poo-with-heart-eyes-72dpi-forPersonalUseOnly.png";
 </script>
@@ -122,22 +127,5 @@
       </div>
     </form>
   </div>
-  <script
-    src="https://www.gstatic.com/firebasejs/8.2.3/firebase-app.js"></script><script
-    src="https://www.gstatic.com/firebasejs/8.2.3/firebase-auth.js"></script><script
-    src="https://www.gstatic.com/firebasejs/8.2.3/firebase-firestore.js"></script><script>
-    var firebaseConfig = {
-      apiKey: " AIzaSyCPBQOoHU38VXcW7LFSoGT-IrrHwxiil48 ",
-      projectId: "sbhacks2021-301902",
-      authDomain: "sbhacks2021-301902.firebaseapp.com",
-      databaseURL: "https://sbhacks2021-301902.firebaseio.com",
-      storageBucket: "sbhacks2021-301902.appspot.com",
-    };
-    firebase.initializeApp(firebaseConfig);
 
-    firebase.auth().onAuthStateChanged(function (user) {
-      window.user = user;
-      console.log(user);
-    });
-  </script>
 </div>

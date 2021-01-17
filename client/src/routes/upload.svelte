@@ -1,7 +1,8 @@
 
 
 <script>
-    import {db} from '../firebase';
+import { onMount } from "svelte";
+
 
     let image_url = "";
     let color = "yellow";
@@ -20,19 +21,21 @@
     	embedded_obj: embedded_objects,
     };
 
-    function onSubmit(data) 
-    {
-        if(error !== "")
+    onMount(()=>{    
+        function onSubmit(data) 
         {
-            alert("Please validate your image url first!");
+            if(error !== "")
+            {
+                alert("Please validate your image url first!");
+            }
+            else
+            {
+                db.collection("images").doc().set(imageData).then(function(){
+                    window.alert("success");
+                })
+            }
         }
-        else
-        {
-            db.collection("images").doc().set(imageData).then(function(){
-			    window.alert("success");
-			})
-        }
-    }
+    });
     
     function validate() {
         let url = image_url;

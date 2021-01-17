@@ -7,6 +7,7 @@ function get_images(){
     images = []
 }
 
+
 </script>
 
 <div class="h-screen">
