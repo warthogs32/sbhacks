@@ -1,30 +1,41 @@
 <script>
   import { onMount } from "svelte";
 
-  function goRegister() {
-    window.location.href = "register";
+  function goLogin() {
+    window.location.href = "/";
   }
 
   onMount(() => {
-    document.querySelector("#sign-in").addEventListener("click", function (e) {
+    document.querySelector("#register").addEventListener("click", function (e) {
       e.preventDefault();
       e.stopPropagation();
       var email = document.querySelector("#email").value;
       var password = document.querySelector("#password").value;
+      var firstname = document.querySelector("#fname").value;
+      var lastname = document.querySelector("#lname").value;
       var auth = firebase.auth();
       var currentUser;
+      var db = firebase.firestore();
       auth
-        .signInWithEmailAndPassword(email, password)
+        .createUserWithEmailAndPassword(email, password)
         .then((user) => {
           currentUser = user.user;
-          console.log("signed in");
-          // window.alert(currentUser.uid);
-          window.location.href = "swipe";
+          db.collection("users")
+            .doc(currentUser.uid)
+            .set({
+              email: currentUser.email,
+              password: password,
+              fname: firstname,
+              lname: lastname,
+            })
+            .then(function () {
+              window.alert("You are registered! Happy poop matching!");
+              window.location.href = "swipe";
+            });
         })
         .catch((error) => {
-          console.log("sign in error");
+          console.log("register error");
           window.alert(error.message);
-          location.reload(); // this needs to be here so if they click register after, it will redirect instead of refreshing
         });
     });
   });
@@ -45,6 +56,30 @@
     <form class="mt-8 space-y-6" action="#" method="POST">
       <input type="hidden" name="remember" value="true" />
       <div class="rounded-md shadow-sm -space-y-px">
+        <div>
+          <label for="email-address" class="sr-only">First name</label>
+          <input
+            id="fname"
+            name="fname"
+            type="text"
+            autocomplete=""
+            required
+            class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-yellow-500 focus:border-yellow-700 focus:z-10 sm:text-sm"
+            placeholder="First name"
+          />
+        </div>
+        <div>
+          <label for="email-address" class="sr-only">Last name</label>
+          <input
+            id="lname"
+            name="lname"
+            type="text"
+            autocomplete=""
+            required
+            class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-yellow-500 focus:border-yellow-700 focus:z-10 sm:text-sm"
+            placeholder="Last name"
+          />
+        </div>
         <div>
           <label for="email-address" class="sr-only">Email address</label>
           <input
@@ -73,14 +108,14 @@
 
       <div>
         <button
+          on:click={goLogin}
           id="sign-in"
-          type="submit"
           class="my-1 group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-yellow-800 hover:bg-yellow-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-400">
           Sign in
         </button>
         <button
-          on:click={goRegister}
           id="register"
+          type="submit"
           class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-yellow-800 hover:bg-yellow-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-400">
           Register
         </button>
