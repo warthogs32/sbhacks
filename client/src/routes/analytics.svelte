@@ -1,16 +1,12 @@
 <script>
   import { LayerCake, Svg } from "layercake";
-  import { scaleLinear } from "d3-scale";
+  import { scaleBand } from "d3-scale";
   import { onMount } from "svelte";
-
   import Radar from "../components/Radar.svelte";
   import AxisRadial from "../components/AxisRadial.svelte";
-
   import data from "../components/radarScores.js";
-
   let analyticMessage =
     "This is the type of poop you most enjoy based on your swipes.";
-
   const seriesKey = "name";
   const xKey = [
     "Yellow",
@@ -23,12 +19,9 @@
     "Dark",
     "Embedded Objects",
   ];
-
   // this needs to be changed to fetch from firebase instead of the test file
   const seriesNames = Object.keys(data[0]).filter((d) => d !== seriesKey);
-
   let total = 0;
-
   console.log(data);
   var poops = seriesNames;
   onMount(() => {
@@ -41,7 +34,6 @@
           .then(function (doc) {
             if (doc.exists) {
               var person = doc.data();
-
               var swipes = Object.keys(person.swipes);
               // converts the value from string to Integer for all keys
               swipes.forEach((str) => {
@@ -70,7 +62,7 @@
     console.log(total);
     data.forEach((d) => {
       seriesNames.forEach((name) => {
-        d[name] = (d[name] / total) * 35; // prevents chart from getting really big or small
+        d[name] = (d[name] / total) * 25; // prevents chart from getting really big or small
         if (total <= 36) {
           d[name] += 0;
         }
@@ -78,7 +70,6 @@
       console.log(d);
     });
   });
-
   console.log(data);
 </script>
 
@@ -104,7 +95,7 @@
                 padding={{ top: 30, right: 30, bottom: 30, left: 30 }}
                 x={xKey}
                 xDomain={[0, 10]}
-                xRange={({ height }) => [0, (height * (30 / total)) / 2]}
+                xRange={[0, 300]}
                 {data}
               >
                 <Svg>
