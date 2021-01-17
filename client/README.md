@@ -1,105 +1,108 @@
-*Looking for a shareable component template? Go here --> [sveltejs/component-template](https://github.com/sveltejs/component-template)*
+<h1 align="center">🌐 Sapper with PostCSS project base</h1>
 
----
+## ❓ What is this?
+This is an extension to the [official Sapper Rollup template](https://github.com/sveltejs/sapper-template-rollup) with support for PostCSS inside Svelte components. You are also recommended to check out [@nhristov's similar template](https://github.com/nhristov/sapper-template-rollup).
 
-# svelte app
+- [Sapper for Svelte](https://sapper.svelte.dev/)
+  - [Official VS Code Extension](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode)
+- [PostCSS](https://postcss.org/)
+  - [Tailwind CSS](https://tailwindcss.com/)
+    - [Official VS Code Extension](https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss)
+  - [postcss-import](https://github.com/postcss/postcss-import)
+  - [PurgeCSS](https://www.purgecss.com/)
+  - [CSSNano](https://cssnano.co/)
+  - Inside Svelte components, thanks to [`svelte-preprocess`](https://github.com/kaisermann/svelte-preprocess)
+- [Progressive Web App (PWA)](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps) best practices set up
+  - [`manifest.json`](https://developer.mozilla.org/en-US/docs/Web/Manifest)'s most important fields filled out
+  - High [Lighthouse](https://developers.google.com/web/tools/lighthouse) audit score
+- [ESLint](https://eslint.org/)
+  - [VS Code Extension](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
+  - `eslint:fix` package script
 
-This is a project template for [Svelte](https://svelte.dev) apps. It lives at https://github.com/sveltejs/template.
+If you're looking for something with much, much more bundled in, check out [my opinionated project base](https://github.com/babichjacob/sapper-firebase-typescript-graphql-tailwindcss-actions-template).
 
-To create a new project based on this template using [degit](https://github.com/Rich-Harris/degit):
+## 🧭 Project Status
+**This project base will continue to be maintained** [until SvelteKit is ready](https://svelte.dev/blog/whats-the-deal-with-sveltekit). 
 
-```bash
-npx degit sveltejs/template svelte-app
-cd svelte-app
+Once you are prepared to migrate, check out the [Svelte Adders](https://github.com/babichjacob/svelte-adders) project for information about how to recreate this project base's functionality. You should specifically look at [svelte-add-postcss](https://github.com/babichjacob/svelte-add-postcss) and [svelte-add-tailwindcss](https://github.com/babichjacob/svelte-add-tailwindcss).
+
+**Read on to use this project base today:**
+
+## 📋 Copy
+Choose either to clone or fork depending on your preference.
+
+### 🐑 Clone
+```sh
+git clone https://github.com/babichjacob/sapper-postcss-template
 ```
 
-*Note that you will need to have [Node.js](https://nodejs.org) installed.*
+### 🍴 Fork
+Click the `Use this template` button on [this project's GitHub page](https://github.com/babichjacob/sapper-postcss-template).
 
+### ⬇️ Install Dependencies
+You need to be using version 14.15 or higher of Node.
 
-## Get started
-
-Install the dependencies...
-
-```bash
-cd svelte-app
-npm install
+```sh
+cd sapper-postcss-template
+npm install  # pnpm also works
 ```
 
-...then start [Rollup](https://rollupjs.org):
+## 🛠 Usage
 
-```bash
+### 🧪 Development
+```sh
 npm run dev
 ```
 
-Navigate to [localhost:5000](http://localhost:5000). You should see your app running. Edit a component file in `src`, save it, and reload the page to see your changes.
-
-By default, the server will only respond to requests from localhost. To allow connections from other computers, edit the `sirv` commands in package.json to include the option `--host 0.0.0.0`.
-
-If you're using [Visual Studio Code](https://code.visualstudio.com/) we recommend installing the official extension [Svelte for VS Code](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode). If you are using other editors you may need to install a plugin in order to get syntax highlighting and intellisense.
-
-## Building and running in production mode
-
-To create an optimised version of the app:
-
-```bash
-npm run build
+### 🔨 Building for Production
+```sh
+npm run prod
 ```
 
-You can run the newly built app with `npm run start`. This uses [sirv](https://github.com/lukeed/sirv), which is included in your package.json's `dependencies` so that the app will work when you deploy to platforms like [Heroku](https://heroku.com).
-
-
-## Single-page app mode
-
-By default, sirv will only respond to requests that match files in `public`. This is to maximise compatibility with static fileservers, allowing you to deploy your app anywhere.
-
-If you're building a single-page app (SPA) with multiple routes, sirv needs to be able to respond to requests for *any* path. You can make it so by editing the `"start"` command in package.json:
-
-```js
-"start": "sirv public --single"
+### 📦 Exporting a Static Site
+```sh
+npm run export
 ```
 
-## Using TypeScript
+## ⚙ Configuration
 
-This template comes with a script to set up a TypeScript development environment, you can run it immediately after cloning the template with:
+### 💨 Optionally removing Tailwind CSS (and PurgeCSS)
+1. Remove all Tailwind imports in the `src/global.pcss` file
+2. Remove these lines in `postcss.config.js`:
+    1. ```js
+       const tailwindcss = require("tailwindcss");
+       ```
+    3. ```js
+       const tailwindcssConfig = require("./tailwind.config");
+       ```
+    3. ```js
+       tailwindcss(tailwindcssConfig),
+       ```
+3. Delete the `tailwind.config.js` file
+4. Uninstall the `tailwindcss` package
 
-```bash
-node scripts/setupTypeScript.js
-```
+### ⚡ Web app
+Many of the fields in `static/manifest.json` (`short_name`, `name`, `description`, `categories`, `theme_color`, and `background_color`) are filled with demonstrative values that won't match your site. Similarly, you've got to take new screenshots to replace the included `static/screenshot-1.png` file. If you want, you can add [app shortcut definitions for "add to home screen" on Android](https://web.dev/app-shortcuts/#define-app-shortcuts-in-the-web-app-manifest). Once you change `theme_color`, update the `meta name="theme-color"` tag in `src/template.html` to match.
 
-Or remove the script via:
+The [Apple touch icon](https://developer.apple.com/library/archive/documentation/AppleApplications/Reference/SafariWebContent/ConfiguringWebApplications/ConfiguringWebApplications.html), favicon, and `logo-` files (also all in the `static` directory) are created by placing the logo within a "safe area" centered circle that takes up 80% of the canvas's dimension. For instance, the constraining circle in `logo-512.png` is 512 × 0.80 = 409.6 ≈ 410 pixels wide and tall. 
 
-```bash
-rm scripts/setupTypeScript.js
-```
+### 🗺 Source maps
+This project base comes with [source maps](https://blog.teamtreehouse.com/introduction-source-maps) enabled during development and disabled during production (and exports) for the best compromise between performance and developer experience. You can change this behavior through the `sourcemap` variable in `rollup.config.js`.
 
-## Deploying to the web
+## 😵 Help! I have a question
 
-### With [Vercel](https://vercel.com)
+[Create an issue](https://github.com/babichjacob/sapper-postcss-template/issues/new) and I'll try to help.
 
-Install `vercel` if you haven't already:
+## 😡 Fix! There is something that needs improvement
 
-```bash
-npm install -g vercel
-```
+[Create an issue](https://github.com/babichjacob/sapper-postcss-template/issues/new) or [pull request](https://github.com/babichjacob/sapper-postcss-template/pulls) and I'll try to fix.
 
-Then, from within your project folder:
+I'm sorry, because of my skill level and the fragility of (the combination of) some of these tools, there are likely to be problems in this project. Thank you for bringing them to my attention or fixing them for me.
 
-```bash
-cd public
-vercel deploy --name my-project
-```
+## 📄 License
 
-### With [surge](https://surge.sh/)
+MIT
 
-Install `surge` if you haven't already:
+---
 
-```bash
-npm install -g surge
-```
-
-Then, from within your project folder:
-
-```bash
-npm run build
-surge public my-project.surge.sh
-```
+_This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
