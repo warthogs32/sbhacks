@@ -1,6 +1,6 @@
 <script>
   import { LayerCake, Svg } from "layercake";
-  import { scaleBand } from "d3-scale";
+  import { scaleLinear } from "d3-scale";
   import { onMount } from "svelte";
   import Radar from "../components/Radar.svelte";
   import AxisRadial from "../components/AxisRadial.svelte";
@@ -21,7 +21,7 @@
   ];
   // this needs to be changed to fetch from firebase instead of the test file
   const seriesNames = Object.keys(data[0]).filter((d) => d !== seriesKey);
-  let total = 0;
+  let total = 1;
   console.log(data);
   var poops = seriesNames;
   onMount(() => {
@@ -36,12 +36,22 @@
               var person = doc.data();
               var swipes = Object.keys(person.swipes);
               // converts the value from string to Integer for all keys
+              var all0 = true;
               swipes.forEach((str) => {
-                person.swipes[str] = parseInt(person.swipes[str]);
+                // person.swipes[str] = parseInt(person.swipes[str]);
+                all0 = all0 && person.swipes[str] === 0;
+                console.log(person.swipes[str]);
+                total += person.swipes[str];
+                console.log(total);
               });
-              console.log(person.swipes);
-              console.log(data[0]);
-              data[0] = person.swipes;
+              console.log(all0 === 0);
+              if (!all0 === 0) {
+                data[0] += person.swipes;
+                console.log("switch");
+              } else {
+                analyticMessage =
+                  "Once you have made swipes, your analytics graph will show up.";
+              }
             } else {
               console.log("no doc, using default");
               analyticMessage =
@@ -62,7 +72,7 @@
     console.log(total);
     data.forEach((d) => {
       seriesNames.forEach((name) => {
-        d[name] = (d[name] / total) * 25; // prevents chart from getting really big or small
+        d[name] = (d[name] / total) * 26; // prevents chart from getting really big or small
         if (total <= 36) {
           d[name] += 0;
         }
@@ -70,7 +80,7 @@
       console.log(d);
     });
   });
-  console.log(data);
+  console.log(total);
 </script>
 
 <div class="container mx-auto mt-24">
@@ -95,7 +105,7 @@
                 padding={{ top: 30, right: 30, bottom: 30, left: 30 }}
                 x={xKey}
                 xDomain={[0, 10]}
-                xRange={[0, 300]}
+                xRange={({ height }) => [0, (height * (50 / total)) / 2]}
                 {data}
               >
                 <Svg>
