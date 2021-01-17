@@ -13,7 +13,8 @@
             alert("Please validate your image url first!");
         }
         else{
-            r
+            //  TODO hit endpoint
+            //  redirect to swipe.
         }
     }
     
