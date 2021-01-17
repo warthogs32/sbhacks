@@ -24,6 +24,7 @@
         .catch((error) => {
           console.log("sign in error");
           window.alert(error.message);
+          location.reload(); // this needs to be here so if they click register after, it will redirect instead of refreshing
         });
     });
   });
