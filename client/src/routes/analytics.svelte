@@ -8,15 +8,26 @@
   import data from "../components/radarScores.js";
 
   const seriesKey = "name";
-  const xKey = ["fastball", "change", "slider", "cutter", "curve"];
+  const xKey = ["hard", "watery", "brown", "yellow", "green"];
 
   const seriesNames = Object.keys(data[0]).filter((d) => d !== seriesKey);
-
+  var total = 0;
   data.forEach((d) => {
     seriesNames.forEach((name) => {
       d[name] = +d[name];
+      total += d[name];
     });
   });
+  data.forEach((d) => {
+    seriesNames.forEach((name) => {
+      d[name] = (d[name] / total) * 35;
+      if (d[name] === 0) {
+        console.log("zero");
+        // d[name] += 1;
+      }
+    });
+  });
+  console.log(total);
 </script>
 
 <!--
@@ -35,17 +46,17 @@
   }
   ```
 -->
-<div class="container mx-auto mt-16">
-  <div class="md:grid md:grid-cols-3 md:gap-6">
+<div class="container mx-auto mt-24">
+  <div class="mx-10 md:grid sm:grid-cols-1 lg:grid-cols-3 md:gap-6">
     <div class="md:col-span-1">
-      <div class="px-4 sm:px-0">
+      <div class="px-4 lg:px-2 sm:px-16">
         <h2 class="text-2xl font-bold leading-6 text-gray-900">Analysis</h2>
         <p class="text-md text-gray-600 mt-5">
           This is the type of poop you most enjoy based on your swipes.
         </p>
       </div>
     </div>
-    <div class="mt-5 md:mt-0 md:col-span-2">
+    <div class="mt-5 pt-8 md:mt-0 md:col-span-2">
       <form action="#" method="POST">
         <!-- <div class="shadow sm:rounded-md sm:overflow-hidden"> -->
         <!-- <div class="px-4 py-5 bg-white space-y-6 sm:p-6 "> -->

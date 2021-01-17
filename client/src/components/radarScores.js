@@ -1,10 +1,9 @@
 export default [
 	{
-		name: 'Allison',
-		fastball: 10,
-		change: 0,
-		slider: 4,
-		cutter: 8,
-		curve: 5
+		hard: 1,
+		watery: 2,
+		brown: 1,
+		yellow: 2,
+		green: 3
 	}
 ];
