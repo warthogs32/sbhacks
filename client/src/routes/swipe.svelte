@@ -1,6 +1,6 @@
 <script>
   import {goto} from "@sapper/app"
-  import stats from "../stores/stats"
+  import {stats} from "../stores/stats"
 
   let missing_src =
     "https://upload.wikimedia.org/wikipedia/commons/b/bf/Sad_face.gif";
