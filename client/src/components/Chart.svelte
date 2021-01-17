@@ -1,10 +1,11 @@
-<canvas id="myChart" width="400" height="400" />
-
 <script>
   import { onMount } from "svelte";
+
+  let canvasElement
+
   function createChart() {
-    var ctx = document.getElementById("myChart").getContext("2d");
-    var myChart = new Chart(ctx, {
+    var ctx = canvasElement.getContext("2d");
+    var myChart = new window.Chart(ctx, {
       type: "bar",
       data: {
         labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
@@ -48,3 +49,5 @@
 
   onMount(createChart);
 </script>
+
+<canvas width="400" height="400" bind:this={canvasElement} />
