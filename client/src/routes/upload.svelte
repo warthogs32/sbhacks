@@ -20,7 +20,6 @@ var firebaseConfig = {
     let consistency = "smooth";
     let brightness = "bright"
     let embedded_objects = true;
-    let hash = ""
     
     let error = "Please validate your image url!";
 
