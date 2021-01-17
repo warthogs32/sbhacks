@@ -26,6 +26,10 @@
 
   // this needs to be changed to fetch from firebase instead of the test file
   const seriesNames = Object.keys(data[0]).filter((d) => d !== seriesKey);
+
+  let total = 0;
+
+  console.log(data);
   var poops = seriesNames;
   onMount(() => {
     firebase.auth().onAuthStateChanged((user) => {
@@ -35,11 +39,17 @@
           .doc(user.uid)
           .get()
           .then(function (doc) {
-            console.log(user.uid);
             if (doc.exists) {
-              console.log("exists");
               var person = doc.data();
-              console.log(person);
+
+              var swipes = Object.keys(person.swipes);
+              // converts the value from string to Integer for all keys
+              swipes.forEach((str) => {
+                person.swipes[str] = parseInt(person.swipes[str]);
+              });
+              console.log(person.swipes);
+              console.log(data[0]);
+              data[0] = person.swipes;
             } else {
               console.log("no doc, using default");
               analyticMessage =
@@ -51,42 +61,24 @@
         console.log("NO USERRRRR");
       }
     });
-
-    // poops = db
-    //   .collection("users")
-    //   .get(user.uid)
-    //   .then(function (doc) {
-    //     console.log(user.uid);
-    //     if (doc.exists) {
-    //       console.log("exists");
-    //       console.log(doc);
-    //     } else {
-    //       console.log("no doc, using default");
-    //       analyticMessage =
-    //         "Once you have made swipes, your analytics graph will show up.";
-    //     }
-    //   });
-  });
-
-  console.log(poops);
-
-  var total = 0;
-  data.forEach((d) => {
-    console.log(d);
-    poops.forEach((name) => {
-      console.log(d[name]);
-      d[name] = +d[name];
-      total += d[name];
+    data.forEach((d) => {
+      seriesNames.forEach((name) => {
+        d[name] = +d[name];
+        total += d[name];
+      });
+    });
+    console.log(total);
+    data.forEach((d) => {
+      seriesNames.forEach((name) => {
+        d[name] = (d[name] / total) * 35; // prevents chart from getting really big or small
+        if (total <= 36) {
+          d[name] += 0;
+        }
+      });
+      console.log(d);
     });
   });
-  data.forEach((d) => {
-    poops.forEach((name) => {
-      d[name] = (d[name] / total) * 35; // prevents chart from getting really big or small
-      if (d[name] === 0) {
-        console.log("zero");
-      }
-    });
-  });
+
   console.log(data);
 </script>
 
@@ -112,7 +104,7 @@
                 padding={{ top: 30, right: 30, bottom: 30, left: 30 }}
                 x={xKey}
                 xDomain={[0, 10]}
-                xRange={({ height }) => [0, height / 2]}
+                xRange={({ height }) => [0, (height * (30 / total)) / 2]}
                 {data}
               >
                 <Svg>
