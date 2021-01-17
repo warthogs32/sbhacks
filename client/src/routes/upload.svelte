@@ -1,7 +1,6 @@
 <script>
   import { onMount } from "svelte";
 
-
   let image_url = "";
   let color = "yellow";
   let consistency = "smooth";
@@ -9,56 +8,80 @@
   let embedded_objects = true;
 
   let error = "Please validate your image url!";
-  $: imageData = {
-    url: image_url,
-    colour: color,
-    consistency: consistency,
-    brightness: brightness,
-    embedded_obj: embedded_objects,
-  };
-    onMount(()=>{    
-        function onSubmit(data) 
-        {
-            if(error !== "")
-            {
-                alert("Please validate your image url first!");
-            }
-            else
-            {
-                db.collection("images").doc().set(imageData).then(function(){
-                    window.alert("success");
-                })
-            }
-        }
-    });
-    
-    function validate() {
-        let url = image_url;
-        let timeout = 5000;
-        var timedOut = false, timer;
-        var img = new Image();
-        img.onerror = img.onabort = function() {
-            if (!timedOut) {
-                clearTimeout(timer);
-                error = "Invalid image url!";
-            }
-        };
-        img.onload = function() {
-            if (!timedOut) {
-                clearTimeout(timer);
-                error = "";
-            }
-        };
-        img.src = url;
-        timer = setTimeout(function() {
-            timedOut = true;
-            error = "Timed out! Please try again!"
-            // reset .src to invalid URL so it stops previous
-            // loading, but doesn't trigger new load
-            img.src = "//!!!!/test.jpg";
-        }, timeout); 
-    };
+  // $: imageData = {
+  //   url: image_url,
+  //   colour: color,
+  //   consistency: consistency,
+  //   brightness: brightness,
+  //   embedded_obj: embedded_objects,
+  // };
+  onMount(() => {
+    document.querySelector("#upload").addEventListener("click", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
 
+      var imageData = {
+        url: image_url,
+        colour: color,
+        consistency: consistency,
+        brightness: brightness,
+        embedded_obj: embedded_objects,
+      };
+
+      if (error !== "") {
+        alert("Please validate your image url first!");
+      } else {
+        console.log(imageData);
+        db.collection("images")
+          .doc()
+          .set(imageData)
+          .then(function () {
+            window.alert("success");
+          });
+      }
+    });
+
+    function onSubmit(data) {
+      if (error !== "") {
+        alert("Please validate your image url first!");
+      } else {
+        db.collection("images")
+          .doc()
+          .set(imageData)
+          .then(function () {
+            window.alert("success");
+          });
+      }
+    }
+  });
+
+  function validate() {
+    let url = image_url;
+    let timeout = 5000;
+    var timedOut = false,
+      timer;
+    var img = new Image();
+    img.onerror = img.onabort = function () {
+      if (!timedOut) {
+        clearTimeout(timer);
+        error = "Invalid image url!";
+      }
+    };
+    img.onload = function () {
+      if (!timedOut) {
+        clearTimeout(timer);
+        error = "";
+      }
+    };
+    img.src = url;
+    timer = setTimeout(function () {
+      timedOut = true;
+      error = "Timed out! Please try again!";
+      // reset .src to invalid URL so it stops previous
+      // loading, but doesn't trigger new load
+      img.src = "//!!!!/test.jpg";
+    }, timeout);
+  }
 </script>
 
 <div class="h-screen flex flex-col justify-end">
@@ -144,5 +167,23 @@
     </div>
   </div>
 
-  <input class="h-12 rounded m-4" type="submit" value="Submit" />
+  <input
+    id="upload"
+    class="h-12 rounded m-4"
+    type="submit"
+    value="Submit"
+  /><script
+    src="https://www.gstatic.com/firebasejs/8.2.3/firebase-app.js"></script><script
+    src="https://www.gstatic.com/firebasejs/8.2.3/firebase-auth.js"></script><script
+    src="https://www.gstatic.com/firebasejs/8.2.3/firebase-firestore.js"></script><script>
+    var firebaseConfig = {
+      apiKey: " AIzaSyCPBQOoHU38VXcW7LFSoGT-IrrHwxiil48 ",
+      projectId: "sbhacks2021-301902",
+      authDomain: "sbhacks2021-301902.firebaseapp.com",
+      databaseURL: "https://sbhacks2021-301902.firebaseio.com",
+      storageBucket: "sbhacks2021-301902.appspot.com",
+    };
+    firebase.initializeApp(firebaseConfig);
+    var db = firebase.firestore();
+  </script>
 </div>
