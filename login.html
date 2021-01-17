@@ -1,0 +1,99 @@
+<html>
+
+<head>
+  <title>login</title>
+</head>
+
+<body>
+  <form>
+    <div>
+      <input id="email" type="text" placeholder="Email...">
+    </div>
+    <div>
+      <input id="password" type="password" placeholder="Password...">
+    </div>
+    <div>
+      <button id="sign-in">Sign In</button>
+      <button id="register">Register</button>
+      <button id="sign-out">Sign Out</button>
+    </div>
+  </form>
+
+  <script src="https://www.gstatic.com/firebasejs/8.2.3/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.2.3/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.2.3/firebase-firestore.js"></script>
+
+    <script>
+    var firebaseConfig = {
+      apiKey: " AIzaSyCPBQOoHU38VXcW7LFSoGT-IrrHwxiil48 ",
+      projectId: "sbhacks2021-301902",
+      authDomain: "sbhacks2021-301902.firebaseapp.com",
+      databaseURL: "https://sbhacks2021-301902.firebaseio.com",
+      storageBucket: "sbhacks2021-301902.appspot.com",
+    };
+    firebase.initializeApp(firebaseConfig);
+  </script>
+
+  <script>
+    firebase.auth().onAuthStateChanged(function(user) {
+      window.user = user;
+      console.log(user);
+    });
+  </script>
+  
+  <script> 
+    document.querySelector('#sign-in').addEventListener('click', function(e) 
+    {
+      e.preventDefault();
+      e.stopPropagation();
+      var email = document.querySelector('#email').value;
+      var password = document.querySelector('#password').value
+      var auth = firebase.auth();
+      auth.signInWithEmailAndPassword(email, password)
+        .then((user) => {
+            console.log("signed in");
+            var currentUser = user;
+            console.log(currentUser.uid);
+        })
+        .catch((error) => {
+            console.log("sign in error");
+            console.log(error.message);
+        });
+    });
+
+    document.querySelector('#register').addEventListener('click', function(e) 
+    {
+      e.preventDefault();
+      e.stopPropagation();
+      var email = document.querySelector('#email').value;
+      var password = document.querySelector('#password').value
+      var auth = firebase.auth();
+      auth.createUserWithEmailAndPassword(email, password)
+        .then((user) => {
+            console.log("registered");
+            currentUser = user;
+        })
+        .catch((error) => {
+            console.log("register error");
+            console.log(error.message);
+        });
+    });
+
+    document.querySelector('#sign-out').addEventListener('click', function(e) 
+    {
+      e.preventDefault();
+      e.stopPropagation();
+      firebase.auth().signOut().then(() =>
+      {
+        console.log("signed out");
+      }).catch((error) =>
+      {
+          console.log(error.message);
+      });
+      
+    });
+  </script>
+
+</body>
+
+</html>
