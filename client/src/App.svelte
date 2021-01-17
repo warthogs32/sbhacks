@@ -1,5 +1,5 @@
 <script>
-  import Chart from "/routes/Chart.svelt";
+//   import Chart from "components/Chart.svelte";
 </script>
 
-<Chart />
+<!-- <Chart /> -->
