@@ -16,20 +16,6 @@
     brightness: brightness,
     embedded_obj: embedded_objects,
   };
-
-  function validate() {
-    let url = image_url;
-    let timeout = 5000;
-    var timedOut = false,
-      timer;
-    var img = new Image();
-    img.onerror = img.onabort = function () {
-      if (!timedOut) {
-        clearTimeout(timer);
-        error = "Invalid image url!";
-      }
-    };
-
     onMount(()=>{    
         function onSubmit(data) 
         {
@@ -71,7 +57,8 @@
             // loading, but doesn't trigger new load
             img.src = "//!!!!/test.jpg";
         }, timeout); 
-    }
+    };
+
 </script>
 
 <div class="h-screen flex flex-col justify-end">

@@ -4,15 +4,10 @@
   let images = [];
   function get_images() {
     // Fetch images
-<<<<<<< HEAD
     images = []
 }
 
 
-=======
-    images = [];
-  }
->>>>>>> df0e47cea485b347441a439fb263f8380a05807c
 </script>
 
 <div class="h-screen">
