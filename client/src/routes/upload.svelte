@@ -3,17 +3,29 @@
     let color = "yellow";
     let consistency = "smooth";
     let brightness = "bright"
-    let embedded_objects = "yes";
+    let embedded_objects = true;
     let hash = ""
     
     let error = "Please validate your image url!";
+
+    var imageData = 
+    {
+    	url: image_url,
+    	colour: color,
+    	consistency: consistency,
+    	brightness: brightness,
+    	embedded_obj: embedded_objects,
+    };
 
     function onSubmit(data) {
         if(error !== ""){
             alert("Please validate your image url first!");
         }
-        else{
-            r
+        else
+        {
+            db.collection("images").doc().set(imageData).then(function(){
+			    window.alert("success");
+			})
         }
     }
     
