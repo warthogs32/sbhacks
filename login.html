@@ -49,10 +49,11 @@
       var email = document.querySelector('#email').value;
       var password = document.querySelector('#password').value
       var auth = firebase.auth();
+      var currentUser;
       auth.signInWithEmailAndPassword(email, password)
         .then((user) => {
+            currentUser = user;
             console.log("signed in");
-            var currentUser = user;
             console.log(currentUser.uid);
         })
         .catch((error) => {
@@ -68,10 +69,12 @@
       var email = document.querySelector('#email').value;
       var password = document.querySelector('#password').value
       var auth = firebase.auth();
+      var currentUser;
       auth.createUserWithEmailAndPassword(email, password)
         .then((user) => {
-            console.log("registered");
             currentUser = user;
+            console.log("registered");
+            console.log(currentUser.uid);
         })
         .catch((error) => {
             console.log("register error");
