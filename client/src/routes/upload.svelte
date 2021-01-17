@@ -1,15 +1,12 @@
 <script>
-<<<<<<< HEAD
-import { onMount } from "svelte";
+  import { onMount } from "svelte";
 
-=======
-  import { db } from "../firebase";
+
   let image_url = "";
   let color = "yellow";
   let consistency = "smooth";
   let brightness = "bright";
   let embedded_objects = true;
->>>>>>> df0e47cea485b347441a439fb263f8380a05807c
 
   let error = "Please validate your image url!";
   $: imageData = {
@@ -19,18 +16,6 @@ import { onMount } from "svelte";
     brightness: brightness,
     embedded_obj: embedded_objects,
   };
-  function onSubmit(data) {
-    if (error !== "") {
-      alert("Please validate your image url first!");
-    } else {
-      db.collection("images")
-        .doc()
-        .set(imageData)
-        .then(function () {
-          window.alert("success");
-        });
-    }
-  }
 
   function validate() {
     let url = image_url;
@@ -44,7 +29,6 @@ import { onMount } from "svelte";
         error = "Invalid image url!";
       }
     };
-<<<<<<< HEAD
 
     onMount(()=>{    
         function onSubmit(data) 
@@ -88,23 +72,6 @@ import { onMount } from "svelte";
             img.src = "//!!!!/test.jpg";
         }, timeout); 
     }
-=======
-    img.onload = function () {
-      if (!timedOut) {
-        clearTimeout(timer);
-        error = "";
-      }
-    };
-    img.src = url;
-    timer = setTimeout(function () {
-      timedOut = true;
-      error = "Timed out! Please try again!";
-      // reset .src to invalid URL so it stops previous
-      // loading, but doesn't trigger new load
-      img.src = "//!!!!/test.jpg";
-    }, timeout);
-  }
->>>>>>> df0e47cea485b347441a439fb263f8380a05807c
 </script>
 
 <div class="h-screen flex flex-col justify-end">
