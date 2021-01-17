@@ -8,7 +8,7 @@
     
     let error = "Please validate your image url!";
 
-    var imageData = 
+    $: imageData = 
     {
     	url: image_url,
     	colour: color,
