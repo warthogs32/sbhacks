@@ -9,7 +9,12 @@
     let error = "Please validate your image url!";
 
     function onSubmit(data) {
-        validate_data(data);
+        if(error !== ""){
+            alert("Please validate your image url first!");
+        }
+        else{
+            r
+        }
     }
     
     function validate() {
@@ -47,7 +52,7 @@
     <label class="text-green-600 mx-4" for="img_url">"Valid image. Plase tag the image."</label>
     {/if}
     <input class="m-4 border-black border-2 mb-2" id="img_url" on:change={validate} type="url" placeholder="Poop image url here" bind:value={image_url} />
-    <input class="h-16 rounded m-4 mt-2" type="submit" on:click={validate} value="Validate image!"  />
+    <input class="h-8 rounded m-4 mt-2" type="submit" on:click={validate} value="Validate image!"  />
     <div class="mt-4 pb-4 mx-4 border-gray-300 border-2">
         <h2 class="mb-2">Color</h2>
         <div class="flex flex-row justify-around border-black">
@@ -109,5 +114,5 @@
         </div>
     </div>
 
-    <input class="h-16 rounded m-4" type="submit" value="Submit" />
+    <input class="h-12 rounded m-4" type="submit" value="Submit" />
 </div>
