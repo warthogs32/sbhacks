@@ -5,7 +5,8 @@
 
 <script>
 
-var firebaseConfig = {
+	var firebaseConfig = 
+	{
       apiKey: " AIzaSyCPBQOoHU38VXcW7LFSoGT-IrrHwxiil48 ",
       projectId: "sbhacks2021-301902",
       authDomain: "sbhacks2021-301902.firebaseapp.com",
@@ -32,8 +33,10 @@ var firebaseConfig = {
     	embedded_obj: embedded_objects,
     };
 
-    function onSubmit(data) {
-        if(error !== ""){
+    function onSubmit(data) 
+    {
+        if(error !== "")
+        {
             alert("Please validate your image url first!");
         }
         else
