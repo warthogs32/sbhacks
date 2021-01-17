@@ -10,6 +10,12 @@
       <input id="email" type="text" placeholder="Email...">
     </div>
     <div>
+        <input id="fname" type="text" placeholder="firstname...">
+      </div>
+      <div>
+        <input id="lname" type="text" placeholder="lastname...">
+      </div>
+    <div>
       <input id="password" type="password" placeholder="Password...">
     </div>
     <div>
@@ -68,17 +74,29 @@
       e.stopPropagation();
       var email = document.querySelector('#email').value;
       var password = document.querySelector('#password').value
+      var firstname = document.querySelector('#fname').value;
+      var lastname = document.querySelector('#lname').value;
       var auth = firebase.auth();
       var currentUser;
+      var db = firebase.firestore();
       auth.createUserWithEmailAndPassword(email, password)
         .then((user) => {
             currentUser = user.user;
-            console.log("registered");
-            console.log(currentUser.uid);
+            db.collection("users").doc(currentUser.uid).set(
+                {
+                    email: currentUser.email,
+                    password: password,
+                    fname: firstname,
+                    lname: lastname 
+                }
+            ).then(function(){
+                window.alert(currentUser.uid);
+            })
+            
         })
         .catch((error) => {
             console.log("register error");
-            console.log(error.message);
+            window.alert(error.message);
         });
     });
 
