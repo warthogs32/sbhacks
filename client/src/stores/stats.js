@@ -27,7 +27,7 @@ function createStats() {
     return {
         subscribe,
         like: (image) => update(stat => {
-            for(let quality in image){
+            for(let quality in stat){
                 //stats[quality][image[quality]]['seen'] += 1;
                 // stats[quality][image[quality]]['swiped'] +=1;
                 stat[quality][image[quality]] += 1;
