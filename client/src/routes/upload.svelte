@@ -20,8 +20,10 @@
     	embedded_obj: embedded_objects,
     };
 
-    function onSubmit(data) {
-        if(error !== ""){
+    function onSubmit(data) 
+    {
+        if(error !== "")
+        {
             alert("Please validate your image url first!");
         }
         else
