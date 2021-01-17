@@ -8,7 +8,17 @@
   import data from "../components/radarScores.js";
 
   const seriesKey = "name";
-  const xKey = ["hard", "watery", "brown", "yellow", "green"];
+  const xKey = [
+    "Yellow",
+    "Green",
+    "Brown",
+    "Black",
+    "Smooth",
+    "Rough",
+    "Bright",
+    "Dark",
+    "Embedded Objects",
+  ];
 
   const seriesNames = Object.keys(data[0]).filter((d) => d !== seriesKey);
   var total = 0;
@@ -20,32 +30,15 @@
   });
   data.forEach((d) => {
     seriesNames.forEach((name) => {
-      d[name] = (d[name] / total) * 35;
+      d[name] = (d[name] / total) * 35; // prevents chart from getting really big or small
       if (d[name] === 0) {
         console.log("zero");
-        // d[name] += 1;
       }
     });
   });
   console.log(total);
 </script>
 
-<!--
-  This example requires Tailwind CSS v2.0+ 
-  
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-    ]
-  }
-  ```
--->
 <div class="container mx-auto mt-24">
   <div class="mx-10 md:grid sm:grid-cols-1 lg:grid-cols-3 md:gap-6">
     <div class="md:col-span-1">
