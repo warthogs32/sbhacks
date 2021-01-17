@@ -2,6 +2,10 @@
   let missing_src =
     "https://upload.wikimedia.org/wikipedia/commons/b/bf/Sad_face.gif";
   let images = [];
+  function get_images() {
+    // Fetch images
+    images = [];
+  }
 </script>
 
 <div class="h-screen">
@@ -33,13 +37,9 @@
     <div id="swiper" class="flex-auto py-6 flex items-center">
       <div>
         {#if images.length > 0}
-          <img class="max-w-sm" src={images[0].src} alt="Poo" />
+          <img src={images[0].src} alt="Poo" />
         {:else}
-          <img
-            class="object-scaled-down max-w-sm"
-            src={missing_src}
-            alt="Missing"
-          />
+          <img class="object-scaled-down" src={missing_src} alt="Missing" />
         {/if}
       </div>
     </div>
@@ -47,7 +47,7 @@
       class="w-screen px-12 pt-6 flex-none flex flex-row justify-around md:justify-center self-end mb-6"
     >
       <button
-        class="uppercase p-3 mx-6 flex items-center bg-blue-600 text-blue-50 max-w-max shadow-sm hover:shadow-lg rounded-full w-12 h-12 sm:self-start">
+        class="uppercase p-3 mx-6 flex items-center bg-red-600 text-blue-50 max-w-max shadow-sm hover:shadow-lg rounded-full w-12 h-12 sm:self-start">
         <svg
           width="32"
           height="32"
@@ -61,7 +61,7 @@
       </button>
 
       <button
-        class="uppercase p-3 mx-6 flex items-center bg-blue-600 text-blue-50 max-w-max shadow-sm hover:shadow-lg w-12 h-12 self-center">
+        class="uppercase p-3 mx-6 flex items-center bg-yellow-600 text-blue-50 max-w-max shadow-sm hover:shadow-lg w-12 h-12 self-center">
         <svg
           width="32"
           height="32"
@@ -76,7 +76,7 @@
       </button>
 
       <button
-        class="uppercase p-3 mx-6 flex items-center bg-blue-600 text-blue-50 max-w-max shadow-sm hover:shadow-lg rounded-full w-12 h-12 sm:self-end">
+        class="uppercase p-3 mx-6 flex items-center bg-green-600 text-blue-50 max-w-max shadow-sm hover:shadow-lg rounded-full w-12 h-12 sm:self-end">
         <svg
           width="32"
           height="32"
